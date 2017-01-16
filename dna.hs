@@ -1,4 +1,4 @@
-module DNA (countNucleotides, reverseComplement) where
+module DNA (countNucleotides, reverseComplement, gcContent) where
 
 import Data.Char
 
@@ -19,3 +19,7 @@ complement _ = error "Unrecognized Nucleotide."
 
 reverseComplement :: String -> String
 reverseComplement = reverse . map complement
+
+gcContent :: (Foldable t, Fractional a) => t Char -> a
+gcContent s = (fromIntegral $ foldl countFunc 0 s) / (fromIntegral $ length s)
+              where countFunc acc c = if c `elem` ['C', 'G'] then acc + 1 else acc
