@@ -1,4 +1,9 @@
-module DNA (countNucleotides, reverseComplement, gcContent) where
+module DNA (
+countNucleotides, 
+reverseComplement, 
+gcContent,
+countMutations
+) where
 
 import Data.Char
 
@@ -23,3 +28,6 @@ reverseComplement = reverse . map complement
 gcContent :: (Foldable t, Fractional a) => t Char -> a
 gcContent s = (fromIntegral $ foldl countFunc 0 s) / (fromIntegral $ length s)
               where countFunc acc c = if c `elem` ['C', 'G'] then acc + 1 else acc
+
+countMutations :: String -> String -> Int
+countMutations s1 s2 = foldl (\acc (a, b) -> if a /= b then acc + 1 else acc) 0 $ zip s1 s2
